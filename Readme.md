@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Качар](https://up.htmlacademy.ru/javascript/14/user/198060).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рябов](https://htmlacademy.ru/profile/bmind).
 
 ---
 
