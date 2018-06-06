@@ -94,6 +94,7 @@ var renderMapNode = function (offerData) {
   mapPin.style.top = offerData.location.y - 87 + 'px';
   var mapPinImg = document.createElement('img');
   mapPinImg.src = offerData.author.avatar;
+  mapPinImg.alt = offerData.offer.title;
   mapPinImg.width = '40';
   mapPinImg.height = '40';
   mapPinImg.dragable = 'false';
