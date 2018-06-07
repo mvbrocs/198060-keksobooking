@@ -49,12 +49,14 @@ var TITLES_LIST = [
   'Уютное бунгало далеко от моря',
   'Неуютное бунгало по колено в воде'
 ];
-var TYPES_LIST = {
+var TYPES_MAP = {
   'palace': 'Дворец',
   'flat': 'Квартира',
   'house': 'Дом',
   'bungalo': 'Бунгало'
 };
+var TYPES = ['palace', 'flat', 'house', 'bungalo'];
+
 var TIMES_LIST = ['12:00', '13:00', '14:00'];
 var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS_LIST = [
@@ -74,7 +76,7 @@ var generateAdvert = function () {
       title: getUniqueValueFromArray(TITLES_LIST),
       address: locationX + ', ' + locationY,
       price: getRandomValue(1000, 1000000),
-      type: TYPES_LIST[getRandomValue(0, (TYPES_LIST.length - 1))],
+      type: getRandomValueFromArray(TYPES),
       rooms: getRandomValue(1, 5),
       guests: getRandomValue(1, 10),
       checkin: getRandomValueFromArray(TIMES_LIST),
@@ -138,7 +140,7 @@ var renderAdvertCard = function (offerData) {
   renderedCard.querySelector('.popup__title').textContent = offerData.offer.title;
   renderedCard.querySelector('.popup__text--address').textContent = offerData.offer.address;
   renderedCard.querySelector('.popup__text--price').textContent = offerData.offer.price + '₽/ночь';
-  renderedCard.querySelector('.popup__type').textContent = offerData.offer.type;
+  renderedCard.querySelector('.popup__type').textContent = TYPES_MAP[offerData.offer.type];
   renderedCard.querySelector('.popup__text--capacity').textContent = offerData.offer.rooms + ' комнаты для ' + offerData.offer.guests + ' гостей';
   renderedCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + offerData.offer.checkin + ', выезд до' + offerData.offer.checkout;
   renderedCard.querySelector('.popup__description').textContent = offerData.offer.description;
