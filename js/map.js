@@ -50,6 +50,7 @@ var TITLES_LIST = [
   'Неуютное бунгало по колено в воде'
 ];
 var TYPES_LIST = {
+  'palace': 'Дворец',
   'flat': 'Квартира',
   'house': 'Дом',
   'bungalo': 'Бунгало'
@@ -73,9 +74,9 @@ var generateAdvert = function () {
       title: getUniqueValueFromArray(TITLES_LIST),
       address: locationX + ', ' + locationY,
       price: getRandomValue(1000, 1000000),
-      type: getRandomValueFromArray(TYPES_LIST),
+      type: TYPES_LIST[getRandomValue(0, (TYPES_LIST.length - 1))],
       rooms: getRandomValue(1, 5),
-      guests: (Math.floor(Math.random() * 10) + 1),
+      guests: getRandomValue(1, 10),
       checkin: getRandomValueFromArray(TIMES_LIST),
       checkout: getRandomValueFromArray(TIMES_LIST),
       features: getRandomArray(FEATURES_LIST),
