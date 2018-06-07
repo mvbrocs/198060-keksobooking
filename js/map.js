@@ -22,6 +22,11 @@ var getRandomArray = function (array) {
   return randomArray;
 };
 
+var MAP_PIN_WIDTH = '40';
+var MAP_PIN_HEIGHT = '40';
+var MAP_PIN_OFFSET_X = '30';
+var MAP_PIN_OFFSET_Y = '87';
+
 var ADVERTS_NUMBER = 8;
 var IMAGES = ['01', '02', '03', '04', '05', '06', '07', '08'];
 var TITLES_LIST = [
@@ -34,7 +39,11 @@ var TITLES_LIST = [
   'Уютное бунгало далеко от моря',
   'Неуютное бунгало по колено в воде'
 ];
-var TYPES_LIST = ['flat', 'house', 'bungalo'];
+var TYPES_LIST = {
+  'flat': 'Квартира',
+  'house': 'Дом',
+  'bungalo': 'Бунгало'
+};
 var TIMES_LIST = ['12:00', '13:00', '14:00'];
 var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS_LIST = [
@@ -90,13 +99,13 @@ showMap();
 var renderMapNode = function (offerData) {
   var mapPin = document.createElement('div');
   mapPin.className = 'map__pin';
-  mapPin.style.left = offerData.location.x - 30 + 'px';
-  mapPin.style.top = offerData.location.y - 87 + 'px';
+  mapPin.style.left = offerData.location.x - MAP_PIN_OFFSET_X + 'px';
+  mapPin.style.top = offerData.location.y - MAP_PIN_OFFSET_Y + 'px';
   var mapPinImg = document.createElement('img');
   mapPinImg.src = offerData.author.avatar;
   mapPinImg.alt = offerData.offer.title;
-  mapPinImg.width = '40';
-  mapPinImg.height = '40';
+  mapPinImg.width = MAP_PIN_WIDTH;
+  mapPinImg.height = MAP_PIN_HEIGHT;
   mapPinImg.dragable = 'false';
   mapPin.appendChild(mapPinImg);
   return mapPin;
@@ -113,22 +122,12 @@ drawMapPins(ADVERTS_NUMBER);
 
 var mapCardTemplate = document.querySelector('template').content.querySelector('.map__card');
 
-var switchOfferType = function (typeOfOffer) {
-  if (typeOfOffer === 'flat') {
-    return 'Квартира';
-  } else if (typeOfOffer === 'bungalo') {
-    return 'Бунгало';
-  } else {
-    return 'Дом';
-  }
-};
-
 var renderAdvertCard = function (offerData) {
   var renderedCard = mapCardTemplate.cloneNode(true);
   renderedCard.querySelector('.popup__title').textContent = offerData.offer.title;
   renderedCard.querySelector('.popup__text--address').textContent = offerData.offer.address;
   renderedCard.querySelector('.popup__text--price').textContent = offerData.offer.price + '₽/ночь';
-  renderedCard.querySelector('.popup__type').textContent = switchOfferType(offerData.offer.type);
+  renderedCard.querySelector('.popup__type').textContent = offerData.offer.type;
   renderedCard.querySelector('.popup__text--capacity').textContent = offerData.offer.rooms + ' комнаты для ' + offerData.offer.guests + ' гостей';
   renderedCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + offerData.offer.checkin + ', выезд до' + offerData.offer.checkout;
   renderedCard.querySelector('.popup__description').textContent = offerData.offer.description;
