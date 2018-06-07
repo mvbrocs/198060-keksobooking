@@ -22,6 +22,16 @@ var getRandomArray = function (array) {
   return randomArray;
 };
 
+var getShuffledArray = function (array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var x = array[i];
+    array[i] = array[j];
+    array[j] = x;
+  }
+  return array;
+};
+
 var MAP_PIN_WIDTH = '40';
 var MAP_PIN_HEIGHT = '40';
 var MAP_PIN_OFFSET_X = '30';
@@ -70,7 +80,7 @@ var generateAdvert = function () {
       checkout: getRandomValueFromArray(TIMES_LIST),
       features: getRandomArray(FEATURES_LIST),
       description: '',
-      photos: PHOTOS_LIST
+      photos: getShuffledArray(PHOTOS_LIST)
     },
     location: {
       x: locationX,
