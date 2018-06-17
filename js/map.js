@@ -73,9 +73,8 @@ var createAds = function () {
 var advertisements = createAds();
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 
-var createMarkersTemplates = function () {
+var createPinsTemplates = function () {
   var fragment = document.createDocumentFragment();
   var template = document.querySelector('template');
   var pin = template.content.querySelector('.map__pin');
@@ -95,14 +94,12 @@ var createMarkersTemplates = function () {
   return fragment;
 };
 
-var markersTemplates = createMarkersTemplates();
+var pinsTemplates = createPinsTemplates();
 
-var renderMarkers = function () {
+var renderPins = function () {
   var mapPins = document.querySelector('.map__pins');
-  mapPins.appendChild(markersTemplates);
+  mapPins.appendChild(pinsTemplates);
 };
-
-renderMarkers();
 
 var createCardTemplate = function () {
   var template = document.querySelector('template');
@@ -179,4 +176,54 @@ var renderCardTemplate = function () {
   map.appendChild(cardTemplate);
 };
 
-renderCardTemplate();
+var adForm = document.querySelector('.ad-form');
+var adFormFieldsets = adForm.querySelectorAll('fieldset');
+
+var disablePage = function () {
+  map.classList.add('map--faded');
+  adForm.classList.add('ad-form--disabled');
+
+  for (var i = 0; i < adFormFieldsets.length; i++) {
+    var fieldset = adFormFieldsets[i];
+    fieldset.setAttribute('disabled', '');
+  }
+};
+
+disablePage();
+
+var pinMain = map.querySelector('.map__pin--main');
+
+var activateMap = function () {
+  map.classList.remove('map--faded');
+  renderPins();
+  adForm.classList.remove('ad-form--disabled');
+
+  for (var i = 0; i < adFormFieldsets.length; i++) {
+    var fieldset = adFormFieldsets[i];
+    fieldset.removeAttribute('disabled');
+  }
+};
+
+var openPopup = function () {
+  renderCardTemplate();
+};
+
+var onMapPinPress = function (evt) {
+  if (evt.target.parentElement.classList.contains('map__pin')) {
+    evt.target.parentElement.classList.add('map__pin--active');
+  }
+
+  if (evt.target.classList.contains('map__pin')) {
+    evt.target.classList.add('map__pin--active');
+  }
+
+  if (evt.target.parentElement.classList.contains('map__pin') || evt.target.classList.contains('map__pin')) {
+    openPopup();
+  }
+};
+
+pinMain.addEventListener('mouseup', function () {
+  activateMap();
+});
+
+document.addEventListener('click', onMapPinPress);
