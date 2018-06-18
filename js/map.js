@@ -95,9 +95,9 @@ var createPinsTemplates = function () {
 };
 
 var pinsTemplates = createPinsTemplates();
+var mapPins = document.querySelector('.map__pins');
 
 var renderPins = function () {
-  var mapPins = document.querySelector('.map__pins');
   mapPins.appendChild(pinsTemplates);
 };
 
@@ -178,7 +178,7 @@ var renderCardTemplate = function () {
 
 var adForm = document.querySelector('.ad-form');
 var adFormFieldsets = adForm.querySelectorAll('fieldset');
-
+var mapIsActive = false;
 var disablePage = function () {
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
@@ -202,28 +202,46 @@ var activateMap = function () {
     var fieldset = adFormFieldsets[i];
     fieldset.removeAttribute('disabled');
   }
+
+  mapIsActive = true;
 };
 
 var openPopup = function () {
   renderCardTemplate();
 };
 
+var activatePin = function (mapPin) {
+  mapPin.classList.add('map__pin--active');
+}
+
+// var removeActiveClassPin = function () {
+//   var pins = mapPins.querySelectorAll('.map__pin');
+//
+//   if (pins.length) {
+//
+//   }
+// };
+
 var onMapPinPress = function (evt) {
-  if (evt.target.parentElement.classList.contains('map__pin')) {
-    evt.target.parentElement.classList.add('map__pin--active');
-  }
 
-  if (evt.target.classList.contains('map__pin')) {
-    evt.target.classList.add('map__pin--active');
-  }
-
-  if (evt.target.parentElement.classList.contains('map__pin') || evt.target.classList.contains('map__pin')) {
+  if (evt.target.parentElement.getAttribute('class') === 'map__pin' || evt.target.getAttribute('class') === 'map__pin') {
     openPopup();
+    // removeActiveClassPin();
+  }
+
+  if (evt.target.parentElement.getAttribute('class') === 'map__pin') {
+    activatePin(evt.target.parentElement);
+  }
+
+  if (evt.target.getAttribute('class') === 'map__pin') {
+    activatePin(evt.target);
   }
 };
 
 pinMain.addEventListener('mouseup', function () {
-  activateMap();
-});
 
-document.addEventListener('click', onMapPinPress);
+  if (!mapIsActive) {
+    activateMap();
+    document.addEventListener('click', onMapPinPress);
+  }
+});
