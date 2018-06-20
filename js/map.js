@@ -279,3 +279,24 @@ pinMain.addEventListener('mouseup', function () {
     activateMap();
   }
 });
+
+var timeFormSelects = document.querySelectorAll('.ad-form__element--time select');
+
+var setTimeFormSelects = function (selectedIndex) {
+  for (var i = 0; i < timeFormSelects.length; i++) {
+    var timeFormSelect = timeFormSelects[i];
+    timeFormSelect.selectedIndex = selectedIndex;
+  }
+};
+
+for (var i = 0; i < timeFormSelects.length; i++) {
+  timeFormSelects[i].addEventListener('change', function (evt) {
+    setTimeFormSelects(evt.target.selectedIndex);
+  });
+}
+
+var houseType = document.querySelector('#type');
+
+houseType.addEventListener('change', function () {
+
+});
