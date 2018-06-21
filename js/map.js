@@ -13,6 +13,12 @@ var OFFER_TITLES = [
   'Неуютное бунгало по колено в воде'
 ];
 var OFFER_TYPES = ['flat', 'house', 'bungalo'];
+var MIN_PRICES = {
+  'bungalo': 0,
+  'flat': 1000,
+  'house': 5000,
+  'palace': 10000
+};
 var OFFER_CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = [
@@ -296,7 +302,60 @@ for (var i = 0; i < timeFormSelects.length; i++) {
 }
 
 var houseType = document.querySelector('#type');
+var formInputPrice = document.querySelector('#price');
 
-houseType.addEventListener('change', function () {
+var changeMinValuePrice = function (selectedValue) {
+  formInputPrice.min = MIN_PRICES[selectedValue];
+};
 
+changeMinValuePrice(houseType.value);
+
+houseType.addEventListener('change', function (evt) {
+  changeMinValuePrice(evt.target.value);
+});
+
+var roomSelect = document.querySelector('#room_number');
+var capacitySelect = document.querySelector('#capacity');
+
+var changeOfferCapacity = function (selectedValue) {
+
+  if (selectedValue !== '100') {
+    capacitySelect.value = selectedValue;
+  } else if (selectedValue === '100') {
+    capacitySelect.value = '0';
+  }
+};
+
+changeOfferCapacity(roomSelect.value);
+
+roomSelect.addEventListener('change', function (evt) {
+  changeOfferCapacity(evt.target.value);
+});
+
+var submitBtn = document.querySelector('.ad-form__submit');
+
+var getIncorrectFields = function () {
+  var incorrectFields = [];
+  var requiredFields = adForm.querySelectorAll('input[required]');
+
+  for (var j = 0; j < requiredFields.length; j++) {
+
+    if (!requiredFields[j].validity.valid) {
+      incorrectFields.push(requiredFields[j]);
+    }
+  }
+
+  return incorrectFields;
+};
+
+var markIncorrectFields = function (fields) {
+
+  for (var j = 0; j < fields.length; j++) {
+    var field = fields[j];
+    field.style.borderColor = 'red';
+  }
+};
+
+submitBtn.addEventListener('click', function () {
+  markIncorrectFields(getIncorrectFields());
 });
