@@ -1,26 +1,12 @@
 'use strict';
 
 var ADS_NUM = 8;
-var AVATAR_PATH = 'img/avatars/user';
-var OFFER_TITLES = [
-  'Большая уютная квартира',
-  'Маленькая неуютная квартира',
-  'Огромный прекрасный дворец',
-  'Маленький ужасный дворец',
-  'Красивый гостевой домик',
-  'Некрасивый негостеприимный домик',
-  'Уютное бунгало далеко от моря',
-  'Неуютное бунгало по колено в воде'
-];
-var OFFER_TYPES = ['flat', 'house', 'bungalo'];
 var MIN_PRICES = {
   'bungalo': 0,
   'flat': 1000,
   'house': 5000,
   'palace': 10000
 };
-var OFFER_CHECK_TIMES = ['12:00', '13:00', '14:00'];
-var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
@@ -29,52 +15,6 @@ var PHOTOS = [
 var PIN_HEIGHT = 70;
 var PIN_WIDTH = 50;
 var ESC_KEYCODE = 27;
-
-var getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-var createAds = function () {
-  var ads = [];
-
-  for (var i = 0; i < ADS_NUM; i++) {
-    var avatarNum = i + 1;
-
-    if (avatarNum <= 9) {
-      avatarNum = '0' + avatarNum;
-    }
-
-    var ad = {};
-
-    var features = FEATURES.slice();
-    features.length = getRandomInt(0, FEATURES.length);
-
-    ad.author = {};
-    ad.author.avatar = AVATAR_PATH + avatarNum + '.png';
-
-    ad.location = {};
-    ad.location.x = getRandomInt(300, 901);
-    ad.location.y = getRandomInt(100, 501);
-
-    ad.offer = {};
-    ad.offer.title = OFFER_TITLES[i];
-    ad.offer.address = ad.location.x + ', ' + ad.location.y;
-    ad.offer.price = getRandomInt(1000, 1000000);
-    ad.offer.type = OFFER_TYPES[getRandomInt(0, OFFER_TYPES.length)];
-    ad.offer.rooms = getRandomInt(1, 6);
-    ad.offer.guests = getRandomInt(1, 11);
-    ad.offer.checkin = OFFER_CHECK_TIMES[getRandomInt(0, OFFER_CHECK_TIMES.length)];
-    ad.offer.checkout = OFFER_CHECK_TIMES[getRandomInt(0, OFFER_CHECK_TIMES.length)];
-    ad.offer.features = features;
-    ad.offer.description = '';
-    ad.offer.photos = PHOTOS.slice();
-
-
-    ads.push(ad);
-  }
-
-  return ads;
-};
 
 var advertisements = createAds();
 
