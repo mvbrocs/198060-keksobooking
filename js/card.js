@@ -7,9 +7,11 @@
     'bungalo': 'Бунгало'
   };
 
+  var cardTemplate = document.querySelector('template').content.querySelector('.map__card');
+
   window.card = {
     create: function (advertData) {
-      var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+      var card = cardTemplate.cloneNode(true);
 
       var setFeatures = function () {
         var featuresContainer = card.querySelector('.popup__features');
