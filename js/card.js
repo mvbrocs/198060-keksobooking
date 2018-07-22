@@ -8,7 +8,7 @@
   };
 
   window.card = {
-    render: function (advertData) {
+    create: function (advertData) {
       var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
       var setFeatures = function () {

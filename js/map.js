@@ -59,7 +59,7 @@
   window.map = {
     openPopup: function (advertData) {
       removePopup();
-      map.appendChild(window.card.render(advertData));
+      map.appendChild(window.card.create(advertData));
       window.pins.deactivate();
       document.addEventListener('click', onPopupBtnClosePress);
       document.addEventListener('keydown', onPopupEscPress);
