@@ -37,7 +37,9 @@
       window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
     };
 
-    var onMouseUp = function () {
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
