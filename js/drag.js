@@ -3,14 +3,10 @@
 (function () {
 
   window.pins.pinMain.node.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
-
     var startCoordinates = {
       x: evt.clientX,
       y: evt.clientY
     };
-
-    window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
 
     var limitYCoordinate = function (shift, min, max) {
 
@@ -45,6 +41,10 @@
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
+
+    evt.preventDefault();
+
+    window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
