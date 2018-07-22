@@ -10,14 +10,6 @@
 
   var timeSelects = document.querySelectorAll('.ad-form__element--time select');
 
-  for (var i = 0; i < timeSelects.length; i++) {
-
-    timeSelects[i].addEventListener('change', function (evt) {
-      var currentSelect = evt.target;
-      setTimeSelects(currentSelect.selectedIndex);
-    });
-  }
-
   var setTimeSelects = function (selectedIndex) {
 
     for (var j = 0; j < timeSelects.length; j++) {
@@ -32,13 +24,6 @@
     priceField.min = MIN_PRICES[selectedValue];
   };
 
-  changeMinValuePrice(typeSelect.value);
-
-  typeSelect.addEventListener('change', function (evt) {
-    var typeSelectTarget = evt.target;
-    changeMinValuePrice(typeSelectTarget.value);
-  });
-
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
 
@@ -50,13 +35,6 @@
       capacitySelect.value = '0';
     }
   };
-
-  changeOfferCapacity(roomSelect.value);
-
-  roomSelect.addEventListener('change', function (evt) {
-    var roomSelectTarget = evt.target;
-    changeOfferCapacity(roomSelectTarget.value);
-  });
 
   var advertForm = document.querySelector('.ad-form');
   var advertFormGroups = advertForm.querySelectorAll('fieldset');
@@ -80,6 +58,28 @@
       advertFormGroups[k].setAttribute('disabled', '');
     }
   };
+
+  for (var i = 0; i < timeSelects.length; i++) {
+
+    timeSelects[i].addEventListener('change', function (evt) {
+      var currentSelect = evt.target;
+      setTimeSelects(currentSelect.selectedIndex);
+    });
+  }
+
+  changeMinValuePrice(typeSelect.value);
+
+  typeSelect.addEventListener('change', function (evt) {
+    var typeSelectTarget = evt.target;
+    changeMinValuePrice(typeSelectTarget.value);
+  });
+
+  changeOfferCapacity(roomSelect.value);
+
+  roomSelect.addEventListener('change', function (evt) {
+    var roomSelectTarget = evt.target;
+    changeOfferCapacity(roomSelectTarget.value);
+  });
 
   window.validation.validate(advertForm);
 
