@@ -7,7 +7,7 @@
   };
 
   window.validation = {
-    validate: function (form) {
+    validateForm: function (form) {
 
       form.addEventListener('submit', function (evt) {
         var formIsValid = true;

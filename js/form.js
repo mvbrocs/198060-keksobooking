@@ -83,7 +83,7 @@
     changeOfferCapacity(roomSelectTarget.value);
   });
 
-  window.validation.validate(advertForm);
+  window.validation.validateForm(advertForm);
 
   window.form = {
     enable: function () {
