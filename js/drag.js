@@ -34,7 +34,7 @@
 
       window.pins.pinMain.node.style.left = shift.x + 'px';
       window.pins.pinMain.node.style.top = shift.y + 'px';
-      window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
+      window.form.setAddress();
     };
 
     var onMouseUp = function (upEvt) {
@@ -46,7 +46,7 @@
 
     evt.preventDefault();
 
-    window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
+    window.form.setAddress();
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);

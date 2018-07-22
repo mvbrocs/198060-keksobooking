@@ -94,8 +94,8 @@
       disableForm();
       disableFormFieldsets();
     },
-    setAddress: function (xCoordinate, yCoordinate) {
-      addressField.value = 'x: ' + xCoordinate + ', y: ' + yCoordinate;
+    setAddress: function () {
+      addressField.value = 'x: ' + (window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2)) + ', y: ' + (window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
     }
   };
 })();
