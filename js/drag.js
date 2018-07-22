@@ -2,21 +2,21 @@
 
 (function () {
 
+  var limitYCoordinate = function (shift, min, max) {
+
+    if (shift.y < min) {
+      shift.y = min;
+    }
+
+    if (shift.y > max) {
+      shift.y = max;
+    }
+  };
+
   window.pins.pinMain.node.addEventListener('mousedown', function (evt) {
     var startCoordinates = {
       x: evt.clientX,
       y: evt.clientY
-    };
-
-    var limitYCoordinate = function (shift, min, max) {
-
-      if (shift.y < min) {
-        shift.y = min;
-      }
-
-      if (shift.y > max) {
-        shift.y = max;
-      }
     };
 
     var onMouseMove = function (moveEvt) {
