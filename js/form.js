@@ -37,7 +37,7 @@
   };
 
   var advertForm = document.querySelector('.ad-form');
-  var advertFormGroups = advertForm.querySelectorAll('fieldset');
+  var advertFormFieldsets = advertForm.querySelectorAll('fieldset');
 
   var enableForm = function () {
     advertForm.classList.remove('ad-form--disabled');
@@ -48,14 +48,14 @@
   };
 
   var enableFormFieldsets = function () {
-    for (var k = 0; k < advertFormGroups.length; k++) {
-      advertFormGroups[k].removeAttribute('disabled');
+    for (var k = 0; k < advertFormFieldsets.length; k++) {
+      advertFormFieldsets[k].removeAttribute('disabled');
     }
   };
 
   var disableFormFieldsets = function () {
-    for (var k = 0; k < advertFormGroups.length; k++) {
-      advertFormGroups[k].setAttribute('disabled', '');
+    for (var k = 0; k < advertFormFieldsets.length; k++) {
+      advertFormFieldsets[k].setAttribute('disabled', '');
     }
   };
 
