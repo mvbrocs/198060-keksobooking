@@ -25,15 +25,6 @@
     window.form.enable();
   };
 
-  disablePage();
-
-  window.pins.pinMain.node.addEventListener('mouseup', function () {
-
-    if (!pageIsEnabled) {
-      enablePage();
-    }
-  });
-
   var onPopupBtnClosePress = function (evt) {
 
     if (evt.target.classList.contains('popup__close')) {
@@ -55,6 +46,15 @@
       map.removeChild(popup);
     }
   };
+
+  disablePage();
+
+  window.pins.pinMain.node.addEventListener('mouseup', function () {
+
+    if (!pageIsEnabled) {
+      enablePage();
+    }
+  });
 
   window.map = {
     openPopup: function (advertData) {
