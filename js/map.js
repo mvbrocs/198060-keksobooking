@@ -1,33 +1,40 @@
 'use strict';
 
 (function () {
-  var adForm = document.querySelector('.ad-form');
-  var adFormGroups = adForm.querySelectorAll('fieldset');
-
   var map = document.querySelector('.map');
+  var pageIsEnabled = false;
+
+  var fadeInMap = function () {
+    map.classList.remove('map--faded');
+  };
+
+  var fadeOutMap = function () {
+    map.classList.add('map--faded');
+  };
 
   var disablePage = function () {
-    map.classList.add('map--faded');
-    adForm.classList.add('ad-form--disabled');
+    pageIsEnabled = false;
+    fadeOutMap();
+    window.form.disable();
+  };
 
-    for (var i = 0; i < adFormGroups.length; i++) {
-      adFormGroups[i].setAttribute('disabled', '');
-    }
+  var enablePage = function () {
+    pageIsEnabled = true;
+    fadeInMap();
+    window.pins.render(window.data.adverts);
+    window.form.enable();
   };
 
   disablePage();
 
-  var pinMain = map.querySelector('.map__pin--main');
+  window.pins.pinMain.addEventListener('mouseup', function () {
 
-  var removePopupNode = function () {
-    var popup = map.querySelector('.popup');
-
-    if (popup) {
-      map.removeChild(popup);
+    if (!pageIsEnabled) {
+      enablePage();
     }
-  };
+  });
 
-  var onPopupBtnClose = function (evt) {
+  var onPopupBtnClosePress = function (evt) {
 
     if (evt.target.classList.contains('popup__close')) {
       window.map.closePopup();
@@ -41,38 +48,26 @@
     }
   };
 
-  pinMain.addEventListener('mouseup', function () {
+  var removePopup = function () {
+    var popup = map.querySelector('.popup');
 
-    if (!window.map.isActive) {
-      window.map.activateMap();
+    if (popup) {
+      map.removeChild(popup);
     }
-  });
+  };
 
   window.map = {
-
-    isActive: false,
-    activateMap: function () {
-      this.isActive = true;
-      map.classList.remove('map--faded');
-      window.pin.render();
-      adForm.classList.remove('ad-form--disabled');
-
-      for (var i = 0; i < adFormGroups.length; i++) {
-        var fieldset = adFormGroups[i];
-        fieldset.removeAttribute('disabled');
-      }
-    },
-    openPopup: function (indexPressedPin) {
-      removePopupNode();
-      window.card.render(indexPressedPin);
-      window.pin.deactivate();
-      document.addEventListener('click', onPopupBtnClose);
+    openPopup: function (advertData) {
+      removePopup();
+      map.appendChild(window.card.render(advertData));
+      window.pins.deactivate();
+      document.addEventListener('click', onPopupBtnClosePress);
       document.addEventListener('keydown', onPopupEscPress);
     },
     closePopup: function () {
-      removePopupNode();
-      window.pin.deactivate();
-      document.removeEventListener('click', onPopupBtnClose);
+      removePopup();
+      window.pins.deactivate();
+      document.removeEventListener('click', onPopupBtnClosePress);
       document.removeEventListener('keydown', onPopupEscPress);
     }
   };

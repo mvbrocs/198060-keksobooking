@@ -8,34 +8,35 @@
     'palace': 10000
   };
 
-  var timeFormSelects = document.querySelectorAll('.ad-form__element--time select');
+  var timeSelects = document.querySelectorAll('.ad-form__element--time select');
 
-  var setTimeFormSelects = function (selectedIndex) {
+  for (var i = 0; i < timeSelects.length; i++) {
 
-    for (var i = 0; i < timeFormSelects.length; i++) {
-      timeFormSelects[i].selectedIndex = selectedIndex;
-    }
-  };
-
-  for (var i = 0; i < timeFormSelects.length; i++) {
-
-    timeFormSelects[i].addEventListener('change', function (evt) {
+    timeSelects[i].addEventListener('change', function (evt) {
       var currentSelect = evt.target;
-      setTimeFormSelects(currentSelect.selectedIndex);
+      setTimeSelects(currentSelect.selectedIndex);
     });
   }
 
-  var houseType = document.querySelector('#type');
-  var formInputPrice = document.querySelector('#price');
+  var setTimeSelects = function (selectedIndex) {
 
-  var changeMinValuePrice = function (selectedValue) {
-    formInputPrice.min = MIN_PRICES[selectedValue];
+    for (var j = 0; j < timeSelects.length; j++) {
+      timeSelects[j].selectedIndex = selectedIndex;
+    }
   };
 
-  changeMinValuePrice(houseType.value);
+  var typeSelect = document.querySelector('#type');
+  var priceField = document.querySelector('#price');
 
-  houseType.addEventListener('change', function (evt) {
-    changeMinValuePrice(evt.target.value);
+  var changeMinValuePrice = function (selectedValue) {
+    priceField.min = MIN_PRICES[selectedValue];
+  };
+
+  changeMinValuePrice(typeSelect.value);
+
+  typeSelect.addEventListener('change', function (evt) {
+    var typeSelectTarget = evt.target;
+    changeMinValuePrice(typeSelectTarget.value);
   });
 
   var roomSelect = document.querySelector('#room_number');
@@ -53,35 +54,47 @@
   changeOfferCapacity(roomSelect.value);
 
   roomSelect.addEventListener('change', function (evt) {
-    changeOfferCapacity(evt.target.value);
+    var roomSelectTarget = evt.target;
+    changeOfferCapacity(roomSelectTarget.value);
   });
 
-  var submitBtn = document.querySelector('.ad-form__submit');
-  var adForm = document.querySelector('.ad-form');
+  var advertForm = document.querySelector('.ad-form');
+  var advertFormGroups = advertForm.querySelectorAll('fieldset');
 
-  var getIncorrectFields = function () {
-    var incorrectFields = [];
-    var requiredFields = adForm.querySelectorAll('input[required]');
-
-    for (var j = 0; j < requiredFields.length; j++) {
-
-      if (!requiredFields[j].validity.valid) {
-        incorrectFields.push(requiredFields[j]);
-      }
-    }
-
-    return incorrectFields;
+  var enableForm = function () {
+    advertForm.classList.remove('ad-form--disabled');
   };
 
-  var markIncorrectFields = function (fields) {
+  var disableForm = function () {
+    advertForm.classList.add('ad-form--disabled');
+  };
 
-    for (var j = 0; j < fields.length; j++) {
-      var field = fields[j];
-      field.style.borderColor = 'red';
+  var enableFormFieldsets = function () {
+    for (var k = 0; k < advertFormGroups.length; k++) {
+      advertFormGroups[k].removeAttribute('disabled');
     }
   };
 
-  submitBtn.addEventListener('click', function () {
-    markIncorrectFields(getIncorrectFields());
-  });
+  var disableFormFieldsets = function () {
+    for (var k = 0; k < advertFormGroups.length; k++) {
+      advertFormGroups[k].setAttribute('disabled', '');
+    }
+  };
+
+  window.validation.validate(advertForm);
+
+  window.form = {
+    enable: function () {
+      enableForm();
+      enableFormFieldsets();
+    },
+    disable: function () {
+      disableForm();
+      disableFormFieldsets();
+    },
+    setAddress: function (xCoordinate, yCoordinate) {
+      var addressField = document.querySelector('#address');
+      addressField.value = 'x: ' + xCoordinate + ', y: ' + yCoordinate;
+    }
+  };
 })();

@@ -22,7 +22,7 @@
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
   ];
 
-  var ads = [];
+  var adverts = [];
 
   for (var i = 0; i < ADS_NUM; i++) {
     var avatarNum = i + 1;
@@ -31,34 +31,36 @@
       avatarNum = '0' + avatarNum;
     }
 
-    var ad = {};
+    var advert = {};
 
     var features = FEATURES.slice();
     features.length = window.util.getRandomInt(0, FEATURES.length);
 
-    ad.author = {};
-    ad.author.avatar = AVATAR_PATH + avatarNum + '.png';
+    advert.author = {};
+    advert.author.avatar = AVATAR_PATH + avatarNum + '.png';
 
-    ad.location = {};
-    ad.location.x = window.util.getRandomInt(300, 901);
-    ad.location.y = window.util.getRandomInt(100, 501);
+    advert.location = {};
+    advert.location.x = window.util.getRandomInt(300, 901);
+    advert.location.y = window.util.getRandomInt(100, 501);
 
-    ad.offer = {};
-    ad.offer.title = OFFER_TITLES[i];
-    ad.offer.address = ad.location.x + ', ' + ad.location.y;
-    ad.offer.price = window.util.getRandomInt(1000, 1000000);
-    ad.offer.type = OFFER_TYPES[window.util.getRandomInt(0, OFFER_TYPES.length)];
-    ad.offer.rooms = window.util.getRandomInt(1, 6);
-    ad.offer.guests = window.util.getRandomInt(1, 11);
-    ad.offer.checkin = OFFER_CHECK_TIMES[window.util.getRandomInt(0, OFFER_CHECK_TIMES.length)];
-    ad.offer.checkout = OFFER_CHECK_TIMES[window.util.getRandomInt(0, OFFER_CHECK_TIMES.length)];
-    ad.offer.features = features;
-    ad.offer.description = '';
-    ad.offer.photos = PHOTOS.slice();
+    advert.offer = {};
+    advert.offer.title = OFFER_TITLES[i];
+    advert.offer.address = advert.location.x + ', ' + advert.location.y;
+    advert.offer.price = window.util.getRandomInt(1000, 1000000);
+    advert.offer.type = OFFER_TYPES[window.util.getRandomInt(0, OFFER_TYPES.length)];
+    advert.offer.rooms = window.util.getRandomInt(1, 6);
+    advert.offer.guests = window.util.getRandomInt(1, 11);
+    advert.offer.checkin = OFFER_CHECK_TIMES[window.util.getRandomInt(0, OFFER_CHECK_TIMES.length)];
+    advert.offer.checkout = OFFER_CHECK_TIMES[window.util.getRandomInt(0, OFFER_CHECK_TIMES.length)];
+    advert.offer.features = features;
+    advert.offer.description = '';
+    advert.offer.photos = PHOTOS.slice();
 
 
-    ads.push(ad);
+    adverts.push(advert);
   }
 
-  window.data = ads;
+  window.data = {
+    adverts: adverts
+  };
 })();
