@@ -13,10 +13,11 @@
     create: function (advertData) {
       var card = cardTemplate.cloneNode(true);
 
+      var featuresContainer = card.querySelector('.popup__features');
+      var features = featuresContainer.querySelectorAll('.popup__feature');
+      var advertFeatures = advertData.offer.features;
+
       var setFeatures = function () {
-        var featuresContainer = card.querySelector('.popup__features');
-        var features = featuresContainer.querySelectorAll('.popup__feature');
-        var advertFeatures = advertData.offer.features;
 
         for (var i = features.length - 1; i >= 0; i--) {
           var featureIsExist = false;
@@ -34,9 +35,10 @@
         }
       };
 
+      var photos = card.querySelector('.popup__photos');
+      var photo = card.querySelector('.popup__photo');
+
       var setPhotos = function () {
-        var photos = card.querySelector('.popup__photos');
-        var photo = card.querySelector('.popup__photo');
         photo.src = advertData.offer.photos[0];
 
         for (var i = 1; i < advertData.offer.photos.length; i++) {
