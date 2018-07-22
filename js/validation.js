@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var markErrorField = function (field) {
     field.style.borderColor = 'red';
   };
