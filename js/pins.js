@@ -7,8 +7,9 @@
   var PIN_HEIGHT = 70;
   var PIN_WIDTH = 50;
 
+  var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
   var createMapPin = function (advertData) {
-    var pin = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+    var pin = pinTemplate.cloneNode(true);
 
     pin.style.left = (advertData.location.x - (PIN_WIDTH / 2)) + 'px';
     pin.style.top = (advertData.location.y - PIN_HEIGHT) + 'px';
@@ -30,6 +31,8 @@
     });
   };
 
+  var pinsContainer = document.querySelector('.map__pins');
+
   window.pins = {
     pinMain: {
       node: document.querySelector('.map__pin--main'),
@@ -37,7 +40,6 @@
       height: PIN_MAIN_HEIGHT
     },
     render: function (advertsData) {
-      var pinsContainer = document.querySelector('.map__pins');
 
       for (var i = 0; i < advertsData.length; i++) {
         var pin = createMapPin(advertsData[i]);
