@@ -18,14 +18,14 @@
       card.querySelector('.popup__text--capacity').textContent = advertData.offer.rooms + ' для ' + advertData.offer.guests + ' гостей';
       card.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertData.offer.checkin + ' выезд до ' + advertData.offer.checkout;
 
-      var cardFeaturesContainer = document.querySelector('.popup__features');
+      var cardFeaturesContainer = card.querySelector('.popup__features');
       var cardFeatures = cardFeaturesContainer.querySelectorAll('.popup__feature');
       var advertFeatures = advertData.offer.features;
 
-      for (var i = cardFeatures.length; i >= 0; i--) {
+      for (var i = cardFeatures.length - 1; i >= 0; i--) {
         var featureIsExist = false;
 
-        for (var j = 0; j < advertFeatures.length; i++) {
+        for (var j = 0; j < advertFeatures.length; j++) {
 
           if (cardFeatures[i].classList.contains('popup__feature--' + advertFeatures[j])) {
             featureIsExist = true;
