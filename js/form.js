@@ -59,6 +59,8 @@
     }
   };
 
+  var addressField = document.querySelector('#address');
+
   for (var i = 0; i < timeSelects.length; i++) {
 
     timeSelects[i].addEventListener('change', function (evt) {
@@ -93,7 +95,6 @@
       disableFormFieldsets();
     },
     setAddress: function (xCoordinate, yCoordinate) {
-      var addressField = document.querySelector('#address');
       addressField.value = 'x: ' + xCoordinate + ', y: ' + yCoordinate;
     }
   };
