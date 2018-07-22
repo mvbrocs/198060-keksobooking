@@ -27,7 +27,7 @@
 
   disablePage();
 
-  window.pins.pinMain.addEventListener('mouseup', function () {
+  window.pins.pinMain.node.addEventListener('mouseup', function () {
 
     if (!pageIsEnabled) {
       enablePage();

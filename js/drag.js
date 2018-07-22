@@ -1,11 +1,8 @@
 'use strict';
 
 (function () {
-  var MAIN_PIN_SPIKE_HEIGHT = 16;
-  var MAIN_PIN_WIDTH = 65;
-  var MAIN_PIN_HEIGHT = 65 + MAIN_PIN_SPIKE_HEIGHT;
 
-  window.pins.pinMain.addEventListener('mousedown', function (evt) {
+  window.pins.pinMain.node.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoordinates = {
@@ -13,7 +10,7 @@
       y: evt.clientY
     };
 
-    window.form.setAddress(window.pins.pinMain.offsetLeft + (MAIN_PIN_WIDTH / 2), window.pins.pinMain.offsetTop + MAIN_PIN_HEIGHT);
+    window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
 
     var limitYCoordinate = function (shift, min, max) {
 
@@ -28,8 +25,8 @@
 
     var onMouseMove = function (moveEvt) {
       var shift = {
-        x: window.pins.pinMain.offsetLeft + (moveEvt.clientX - startCoordinates.x),
-        y: window.pins.pinMain.offsetTop + (moveEvt.clientY - startCoordinates.y)
+        x: window.pins.pinMain.node.offsetLeft + (moveEvt.clientX - startCoordinates.x),
+        y: window.pins.pinMain.node.offsetTop + (moveEvt.clientY - startCoordinates.y)
       };
 
       limitYCoordinate(shift, 100, 500);
@@ -39,9 +36,9 @@
         y: moveEvt.clientY
       };
 
-      window.pins.pinMain.style.left = shift.x + 'px';
-      window.pins.pinMain.style.top = shift.y + 'px';
-      window.form.setAddress(window.pins.pinMain.offsetLeft + (MAIN_PIN_WIDTH / 2), window.pins.pinMain.offsetTop + MAIN_PIN_HEIGHT);
+      window.pins.pinMain.node.style.left = shift.x + 'px';
+      window.pins.pinMain.node.style.top = shift.y + 'px';
+      window.form.setAddress(window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2), window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
     };
 
     var onMouseUp = function () {

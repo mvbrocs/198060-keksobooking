@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var PIN_MAIN_SPIKE_HEIGHT = 16;
+  var PIN_MAIN_WIDTH = 65;
+  var PIN_MAIN_HEIGHT = 65 + PIN_MAIN_SPIKE_HEIGHT;
   var PIN_HEIGHT = 70;
   var PIN_WIDTH = 50;
 
@@ -28,7 +31,11 @@
   };
 
   window.pins = {
-    pinMain: document.querySelector('.map__pin--main'),
+    pinMain: {
+      node: document.querySelector('.map__pin--main'),
+      width: PIN_MAIN_WIDTH,
+      height: PIN_MAIN_HEIGHT
+    },
     render: function (advertsData) {
       var pinsContainer = document.querySelector('.map__pins');
 
