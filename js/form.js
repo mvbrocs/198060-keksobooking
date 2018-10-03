@@ -36,30 +36,35 @@
     }
   };
 
-  var advertForm = document.querySelector('.ad-form');
-  var advertFormFieldsets = advertForm.querySelectorAll('fieldset');
-
-  var enableForm = function () {
-    advertForm.classList.remove('ad-form--disabled');
+  var enableForm = function (form) {
+    form.classList.remove('ad-form--disabled');
   };
 
-  var disableForm = function () {
-    advertForm.classList.add('ad-form--disabled');
+  var disableForm = function (form) {
+    form.classList.add('ad-form--disabled');
   };
 
-  var enableFormFieldsets = function () {
-    for (var k = 0; k < advertFormFieldsets.length; k++) {
-      advertFormFieldsets[k].removeAttribute('disabled');
+  var enableFormFieldsets = function (form) {
+    var fieldsets = form.querySelectorAll('fieldset');
+
+    for (var k = 0; k < fieldsets.length; k++) {
+      fieldsets[k].removeAttribute('disabled');
     }
   };
 
-  var disableFormFieldsets = function () {
-    for (var k = 0; k < advertFormFieldsets.length; k++) {
-      advertFormFieldsets[k].setAttribute('disabled', '');
+  var disableFormFieldsets = function (form) {
+    var fieldsets = form.querySelectorAll('fieldset');
+
+    for (var k = 0; k < fieldsets.length; k++) {
+      fieldsets[k].setAttribute('disabled', '');
     }
   };
 
   var addressField = document.querySelector('#address');
+
+  var markErrorField = function (field) {
+    field.style.borderColor = 'red';
+  };
 
   for (var i = 0; i < timeSelects.length; i++) {
 
@@ -83,16 +88,29 @@
     changeOfferCapacity(roomSelectTarget.value);
   });
 
-  window.validation.validateForm(advertForm);
-
   window.form = {
-    enable: function () {
-      enableForm();
-      enableFormFieldsets();
+    enable: function (form) {
+      enableForm(form);
+      enableFormFieldsets(form);
     },
-    disable: function () {
-      disableForm();
-      disableFormFieldsets();
+    disable: function (form) {
+      disableForm(form);
+      disableFormFieldsets(form);
+    },
+    isValid: function (form) {
+      var formIsValid = true;
+      var requiredFields = form.querySelectorAll('[required]');
+
+      for (var j = 0; j < requiredFields.length; j++) {
+        var field = requiredFields[j];
+
+        if (!field.validity.valid) {
+          formIsValid = false;
+          markErrorField(field);
+        }
+      }
+
+      return formIsValid;
     },
     setAddress: function () {
       addressField.value = 'x: ' + (window.pins.pinMain.node.offsetLeft + (window.pins.pinMain.width / 2)) + ', y: ' + (window.pins.pinMain.node.offsetTop + window.pins.pinMain.height);
