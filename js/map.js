@@ -35,7 +35,7 @@
 
   var onPopupEscPress = function (evt) {
 
-    if (evt.keyCode === window.util.keyCodes.ESC_KEYCODE) {
+    if (evt.keyCode === window.util.KeyCode.ESC) {
       window.map.closePopup();
     }
   };
