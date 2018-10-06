@@ -12,8 +12,7 @@
         try {
           onLoad(JSON.parse(xhr.responseText));
         } catch (err) {
-          // eslint-disable-next-line no-console
-          console.log(err);
+          onError(err);
         }
       } else {
         onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);

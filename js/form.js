@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var MIN_PRICES = {
+  var pricesMap = {
     'bungalo': 0,
     'flat': 1000,
     'house': 5000,
@@ -21,7 +21,7 @@
   var priceField = document.querySelector('#price');
 
   var changeMinValuePrice = function (selectedValue) {
-    priceField.min = MIN_PRICES[selectedValue];
+    priceField.min = pricesMap[selectedValue];
   };
 
   var roomSelect = document.querySelector('#room_number');
