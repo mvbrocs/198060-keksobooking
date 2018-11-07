@@ -53,8 +53,6 @@
     addressField.value = 'x: ' + x + ', y: ' + y;
   };
 
-  window.formAd = formAd;
-
   var changeMinValuePrice = function (selectedValue) {
     housePriceField.min = MinPrices[selectedValue];
   };
@@ -108,4 +106,6 @@
 
     window.backend.save(new FormData(adForm), 'https://js.dump.academy/keksobooking', _onSuccessUpload, window.console.log);
   });
+
+  window.formAd = formAd;
 })();
