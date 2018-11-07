@@ -35,9 +35,8 @@
       });
     },
     deactivate: function () {
-      var existingPins = pinsContainer.querySelectorAll('.map__pin');
 
-      [].forEach.call(existingPins, function (pin) {
+      [].forEach.call(pinsContainer.querySelectorAll('.map__pin'), function (pin) {
         if (pin.classList.contains('map__pin--active')) {
           pin.classList.remove('map__pin--active');
         }
