@@ -57,7 +57,7 @@
       pinMainElement.style.left = shift.x + 'px';
       pinMainElement.style.top = shift.y + 'px';
 
-      window.formAd.setAddress(shift.x + PinMain.WIDTH / 2, shift.y + PinMain.HEIGHT);
+      window.form.setAddress(shift.x + PinMain.WIDTH / 2, shift.y + PinMain.HEIGHT);
     };
 
     var onMouseUp = function (upEvt) {
