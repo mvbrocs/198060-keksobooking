@@ -77,6 +77,7 @@
 
   // Disable/enable form, fill field address
   var formInputs = formElement.querySelectorAll('input');
+  var formSelects = formElement.querySelectorAll('select');
   var fieldAddress = document.querySelector('#address');
 
   window.form = {
@@ -85,11 +86,19 @@
         input.removeAttribute('disabled');
       });
 
+      [].forEach.call(formSelects, function (select) {
+        select.removeAttribute('disabled');
+      });
+
       formElement.classList.remove('ad-form--disabled');
     },
     disable: function () {
       [].forEach.call(formInputs, function (input) {
         input.setAttribute('disabled', 'disabled');
+      });
+
+      [].forEach.call(formSelects, function (select) {
+        select.setAttribute('disabled', 'disabled');
       });
 
       formElement.classList.add('ad-form--disabled');

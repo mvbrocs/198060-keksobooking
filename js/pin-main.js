@@ -3,23 +3,6 @@
 (function () {
   var map = document.querySelector('.map');
 
-  var page = {
-    isEnabled: false,
-    enable: function () {
-      this.isEnabled = true;
-      map.classList.remove('map--faded');
-      window.form.enable();
-      window.backend.download('https://js.dump.academy/keksobooking/data', window.pins.render, window.console.log);
-    },
-    disable: function () {
-      this.isEnabled = false;
-      map.classList.add('map--faded');
-      window.form.disable();
-    }
-  };
-
-  page.disable();
-
   var PinMain = {
     WIDTH: 62,
     HEIGHT: 84
@@ -44,8 +27,8 @@
 
   pinMainElement.addEventListener('mouseup', function () {
 
-    if (!page.isEnabled) {
-      page.enable();
+    if (!window.page.isEnabled) {
+      window.page.enable();
     }
   });
 
