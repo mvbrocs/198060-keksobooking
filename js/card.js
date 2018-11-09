@@ -45,19 +45,19 @@
 
 
       // Create photos
-      var dataPhotos = advertData.offer.photos;
+      var srcPhotos = advertData.offer.photos;
       var photosContainer = card.querySelector('.popup__photos');
       var photoElement = card.querySelector('.popup__photo');
 
-      if (!dataPhotos.length) {
+      if (!srcPhotos.length) {
         photosContainer.style.display = 'none';
       } else {
         photosContainer.innerHTML = '';
         var photosFragment = document.createDocumentFragment();
 
-        dataPhotos.forEach(function (dataPhoto) {
+        srcPhotos.forEach(function (srcPhoto) {
           var newPhoto = photoElement.cloneNode(true);
-          newPhoto.src = dataPhoto;
+          newPhoto.src = srcPhoto;
           photosFragment.appendChild(newPhoto);
         });
 
