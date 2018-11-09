@@ -74,6 +74,8 @@
     window.backend.save(new FormData(form), 'https://js.dump.academy/keksobooking', _onSuccessUpload, window.console.log);
   });
 
+
+  // Disable/enable form, fill field address
   var formInputs = form.querySelectorAll('input');
   var fieldAddress = document.querySelector('#address');
 
