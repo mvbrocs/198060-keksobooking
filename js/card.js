@@ -13,15 +13,6 @@
     create: function (advertData) {
       var card = cardTemplate.cloneNode(true);
 
-      var dataFeatures = advertData.offer.features;
-      var featuresContainer = card.querySelector('.popup__features');
-      var featuresFragment;
-
-      var dataPhotos = advertData.offer.photos;
-      var photosContainer = card.querySelector('.popup__photos');
-      var photoElement = card.querySelector('.popup__photo');
-      var photosFragment;
-
       card.querySelector('.popup__title').textContent = advertData.offer.title;
       card.querySelector('.popup__text--address').textContent = advertData.offer.address;
       card.querySelector('.popup__text--price').innerHTML = advertData.offer.price + ' &#x20bd;/ночь';
@@ -31,12 +22,16 @@
       card.querySelector('.popup__description').textContent = advertData.offer.description;
       card.querySelector('.popup__avatar').src = advertData.author.avatar;
 
+
       // Create features
+      var dataFeatures = advertData.offer.features;
+      var featuresContainer = card.querySelector('.popup__features');
+
       if (!dataFeatures.length) {
         featuresContainer.style.display = 'none';
       } else {
         featuresContainer.innerHTML = '';
-        featuresFragment = document.createDocumentFragment();
+        var featuresFragment = document.createDocumentFragment();
 
         dataFeatures.forEach(function (feature) {
           var element = document.createElement('li');
@@ -48,12 +43,17 @@
         featuresContainer.appendChild(featuresFragment);
       }
 
+
       // Create photos
+      var dataPhotos = advertData.offer.photos;
+      var photosContainer = card.querySelector('.popup__photos');
+      var photoElement = card.querySelector('.popup__photo');
+
       if (!dataPhotos.length) {
         photosContainer.style.display = 'none';
       } else {
         photosContainer.innerHTML = '';
-        photosFragment = document.createDocumentFragment();
+        var photosFragment = document.createDocumentFragment();
 
         dataPhotos.forEach(function (dataPhoto) {
           var newPhoto = photoElement.cloneNode(true);
