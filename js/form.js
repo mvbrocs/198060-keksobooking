@@ -56,27 +56,27 @@
 
 
   // Submit form data
-  var form = document.querySelector('.ad-form');
+  var formElement = document.querySelector('.ad-form');
 
   var _onSuccessUpload = function (response) {
 
     if (response) {
       window.console.log(response);
     } else {
-      form.reset();
+      formElement.reset();
       window.console.log('Данные успешно отправлены');
     }
   };
 
-  form.addEventListener('submit', function (evt) {
+  formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.backend.save(new FormData(form), 'https://js.dump.academy/keksobooking', _onSuccessUpload, window.console.log);
+    window.backend.save(new FormData(formElement), 'https://js.dump.academy/keksobooking', _onSuccessUpload, window.console.log);
   });
 
 
   // Disable/enable form, fill field address
-  var formInputs = form.querySelectorAll('input');
+  var formInputs = formElement.querySelectorAll('input');
   var fieldAddress = document.querySelector('#address');
 
   window.form = {
@@ -85,14 +85,14 @@
         input.removeAttribute('disabled');
       });
 
-      form.classList.remove('ad-form--disabled');
+      formElement.classList.remove('ad-form--disabled');
     },
     disable: function () {
       [].forEach.call(formInputs, function (input) {
         input.setAttribute('disabled', 'disabled');
       });
 
-      form.classList.add('ad-form--disabled');
+      formElement.classList.add('ad-form--disabled');
     },
     setAddress: function (x, y) {
       fieldAddress.value = 'x: ' + x + ', y: ' + y;
