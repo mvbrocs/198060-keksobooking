@@ -1,18 +1,49 @@
 'use strict';
 
 (function () {
-  var selectType = document.querySelector('#housing-type');
-  var selectPrice = document.querySelector('#housing-price');
-  var selectRooms = document.querySelector('#housing-rooms');
-  var selectGuests = document.querySelector('#housing-guests');
+  var selects = document.querySelectorAll('.map__filter');
+  var checks = document.querySelectorAll('.map__filters .map__checkbox');
+  var filter = {};
+  filter.features = [];
 
-  var checkWifi = document.querySelector('#filter-wifi');
-  var checkDishwasher = document.querySelector('#filter-dishwasher');
-  var checkParking = document.querySelector('#filter-parking');
-  var checkWasher = document.querySelector('#filter-washer');
+  var _setFilter = function (type, filterName, value) {
 
-  var houseType;
-  // var filter = {};
+    if (type === 'select') {
+      filter[filterName] = value;
+    } else if (type === 'check') {
+
+    }
+  };
+
+  // Init filter selects
+  [].forEach.call(selects, function (select) {
+    var selectName = select.getAttribute('name');
+    var filterName = selectName.split('-')[1];
+
+    _setFilter('select', filterName, select.value);
+
+    select.addEventListener('change', function () {
+      _setFilter('select', filterName, select.value);
+    });
+  });
+
+  // Init filter checks
+  [].forEach.call(checks, function (check) {
+
+  });
+
+  console.log(filter);
+
+  // var selectType = document.querySelector('#housing-type');
+  // var selectPrice = document.querySelector('#housing-price');
+  // var selectRooms = document.querySelector('#housing-rooms');
+  // var selectGuests = document.querySelector('#housing-guests');
+  //
+  // var checkWifi = document.querySelector('#filter-wifi');
+  // var checkDishwasher = document.querySelector('#filter-dishwasher');
+  // var checkParking = document.querySelector('#filter-parking');
+  // var checkWasher = document.querySelector('#filter-washer');
+
   //
   // filter.type = document.querySelector('#housing-type').value;
   // filter.price = document.querySelector('#housing-price').value;
