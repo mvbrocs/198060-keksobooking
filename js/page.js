@@ -11,7 +11,7 @@
     page.isEnabled = true;
     map.classList.remove('map--faded');
     window.form.enable();
-    window.backend.download('https://js.dump.academy/keksobooking/data', window.pins.render, window.console.log);
+    window.backend.download('https://js.dump.academy/keksobooking/data', window.filter.init, window.console.log);
   };
 
   page.disable = function () {

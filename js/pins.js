@@ -41,6 +41,13 @@
           pin.classList.remove('map__pin--active');
         }
       });
+    },
+    remove: function () {
+      var currentPins = pinsContainer.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+      [].forEach.call(currentPins, function (pin) {
+        pinsContainer.removeChild(pin);
+      });
     }
   };
 })();
