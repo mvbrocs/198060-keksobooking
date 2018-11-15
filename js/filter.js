@@ -3,42 +3,79 @@
 (function () {
   var pins = [];
 
+  var _getType = function (value) {
+    return value;
+  };
+
+  var _getPrice = function (value) {
+
+  };
+
+  var _getRooms = function () {
+
+  };
+
+  var _getGuests = function () {
+
+  };
+
+  var _getFeatures = function () {
+
+  };
+
+  var filterMap = {
+    'type': _getType,
+    'price': _getPrice,
+    'rooms': _getRooms,
+    'guests': _getGuests,
+    'features': _getFeatures
+  };
+
+  // var priceMap = {
+  //   'any': '*',
+  //   'low': '<10000',
+  //   'middle': '10000 - 50000',
+  //   'high': '>50000'
+  // };
+
   var selects = document.querySelectorAll('.map__filter');
   var checks = document.querySelectorAll('.map__filters .map__checkbox');
 
-  var options = {};
+  var filter = {};
 
-  var _updateOptionSelect = function (filterName, value) {
-    options[filterName] = value;
+  var _updateFilterSelect = function (filterName, value) {
+    filter[filterName] = value;
   };
 
-  var _addOptionCheck = function (value) {
-    options.features.push(value);
+  var _addFilterCheck = function (value) {
+    filter.features.push(value);
   };
 
-  var _removeOptionCheck = function (value) {
-    var elementIndex = options.features.indexOf(value);
+  var _removeFilterCheck = function (value) {
+    var elementIndex = filter.features.indexOf(value);
 
     if (elementIndex) {
-      options.features.splice(elementIndex, 1);
+      filter.features.splice(elementIndex, 1);
     }
   };
 
-  var _filterData = function (data) {
+  var _applyFilter = function (data) {
     return data.filter(function (element) {
 
-      for (var optionKey in options) {
+      for (var filterKey in filter) {
 
-        if (options.hasOwnProperty(optionKey)) {
+        if (filter.hasOwnProperty(filterKey)) {
+          var filterValue = filter[filterKey];
 
-          if (options[optionKey].length !== 0) {
+          if (filterValue === 'any' || (Array.isArray(filterValue) && filterValue.length === 0)) {
+            continue;
+          }
 
-            if (options[optionKey] !== 'any') {
-              console.log(element.offer[optionKey]);
-              if (options[optionKey] !== element.offer[optionKey]) {
-                return false;
-              }
-            }
+          var filterFunction = filterMap[filterKey];
+          var elementValue = filterFunction(element);
+
+          if (filterValue !== elementValue) {
+            return false;
           }
         }
       }
@@ -47,47 +84,51 @@
     });
   };
 
-  var _updateFilter = function () {
+  var _updatePins = function () {
     window.pins.remove();
-    window.pins.render(_filterData(pins));
+    window.pins.render(_applyFilter(pins));
   };
 
-  options.features = [];
 
   // Init filter selects
   [].forEach.call(selects, function (select) {
     var selectName = select.getAttribute('name');
     var filterName = selectName.split('-')[1];
 
-    _updateOptionSelect(filterName, select.value);
+    _updateFilterSelect(filterName, select.value);
 
     select.addEventListener('change', function () {
-      _updateOptionSelect(filterName, select.value);
-      _updateFilter();
+      _updateFilterSelect(filterName, select.value);
+      _updatePins();
     });
   });
 
+
   // Init filter checks
+  filter.features = [];
+
   [].forEach.call(checks, function (check) {
 
     if (check.checked) {
-      _addOptionCheck(check.value);
+      _addFilterCheck(check.value);
     }
 
     check.addEventListener('change', function () {
 
       if (check.checked) {
-        _addOptionCheck(check.value);
+        _addFilterCheck(check.value);
       } else {
-        _removeOptionCheck(check.value);
+        _removeFilterCheck(check.value);
       }
+
+      _updatePins();
     });
   });
 
   window.filter = {
     init: function (data) {
       pins = data;
-      _updateFilter();
+      _updatePins();
     }
   };
 })();
