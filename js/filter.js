@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var pins = [];
-
   var _getType = function (value) {
     return value;
   };
@@ -31,34 +29,6 @@
     'features': _getFeatures
   };
 
-  // var priceMap = {
-  //   'any': '*',
-  //   'low': '<10000',
-  //   'middle': '10000 - 50000',
-  //   'high': '>50000'
-  // };
-
-  var selects = document.querySelectorAll('.map__filter');
-  var checks = document.querySelectorAll('.map__filters .map__checkbox');
-
-  var filter = {};
-
-  var _updateFilterSelect = function (filterName, value) {
-    filter[filterName] = value;
-  };
-
-  var _addFilterCheck = function (value) {
-    filter.features.push(value);
-  };
-
-  var _removeFilterCheck = function (value) {
-    var elementIndex = filter.features.indexOf(value);
-
-    if (elementIndex) {
-      filter.features.splice(elementIndex, 1);
-    }
-  };
-
   var _applyFilter = function (data) {
     return data.filter(function (element) {
 
@@ -72,9 +42,9 @@
           }
 
           var filterFunction = filterMap[filterKey];
-          var elementValue = filterFunction(element);
+          var transformedElementValue = filterFunction(element[filterKey]);
 
-          if (filterValue !== elementValue) {
+          if (filterValue !== transformedElementValue) {
             return false;
           }
         }
@@ -84,13 +54,15 @@
     });
   };
 
-  var _updatePins = function () {
-    window.pins.remove();
-    window.pins.render(_applyFilter(pins));
-  };
-
+  var filter = {};
 
   // Init filter selects
+  var selects = document.querySelectorAll('.map__filter');
+
+  var _updateFilterSelect = function (filterName, value) {
+    filter[filterName] = value;
+  };
+
   [].forEach.call(selects, function (select) {
     var selectName = select.getAttribute('name');
     var filterName = selectName.split('-')[1];
@@ -105,6 +77,20 @@
 
 
   // Init filter checks
+  var checks = document.querySelectorAll('.map__filters .map__checkbox');
+
+  var _addFilterCheck = function (value) {
+    filter.features.push(value);
+  };
+
+  var _removeFilterCheck = function (value) {
+    var elementIndex = filter.features.indexOf(value);
+
+    if (elementIndex) {
+      filter.features.splice(elementIndex, 1);
+    }
+  };
+
   filter.features = [];
 
   [].forEach.call(checks, function (check) {
@@ -124,6 +110,14 @@
       _updatePins();
     });
   });
+
+
+  var pins = [];
+
+  var _updatePins = function () {
+    window.pins.remove();
+    window.pins.render(_applyFilter(pins));
+  };
 
   window.filter = {
     init: function (data) {
