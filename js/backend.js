@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var TIMEOUT = 10000;
+  var TIMEOUT = 30000;
 
   window.backend = {
     download: function (url, onSuccess, onError) {

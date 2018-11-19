@@ -6,27 +6,54 @@
   };
 
   var _getPrice = function (value) {
+    var resPrice;
 
+    if (value < 10000) {
+      resPrice = 'low';
+    } else if (value >= 10000 && value < 50000) {
+      resPrice = 'middle';
+    } else if (value >= 50000) {
+      resPrice = 'high';
+    }
+
+    return resPrice;
   };
 
-  var _getRooms = function () {
-
+  var _getRooms = function (value) {
+    return value.toString();
   };
 
-  var _getGuests = function () {
-
-  };
-
-  var _getFeatures = function () {
-
+  var _getGuests = function (value) {
+    return value.toString();
   };
 
   var filterMap = {
     'type': _getType,
     'price': _getPrice,
     'rooms': _getRooms,
-    'guests': _getGuests,
-    'features': _getFeatures
+    'guests': _getGuests
+  };
+
+  var _checkFilterIsMatch = function (filterKey, filterValue, element) {
+    var filterChecks = filterValue;
+    var elementChecks = element.offer[filterKey];
+
+    for (var i = 0; i < filterChecks.length; i++) {
+      var filterCheck = filterChecks[i];
+
+      if (!elementChecks.includes(filterCheck)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  var _selectFilterIsMatch = function (filterKey, filterValue, element) {
+    var filterFunction = filterMap[filterKey];
+    var transformedElementValue = filterFunction(element.offer[filterKey]);
+
+    return filterValue === transformedElementValue;
   };
 
   var _applyFilter = function (data) {
@@ -41,11 +68,15 @@
             continue;
           }
 
-          var filterFunction = filterMap[filterKey];
-          var transformedElementValue = filterFunction(element[filterKey]);
+          if (Array.isArray(filterValue)) {
 
-          if (filterValue !== transformedElementValue) {
-            return false;
+            if (!_checkFilterIsMatch(filterKey, filterValue, element)) {
+              return false;
+            }
+          } else {
+            if (!_selectFilterIsMatch(filterKey, filterValue, element)) {
+              return false;
+            }
           }
         }
       }
@@ -71,7 +102,7 @@
 
     select.addEventListener('change', function () {
       _updateFilterSelect(filterName, select.value);
-      _updatePins();
+      window.debounce(_updatePins)();
     });
   });
 
@@ -86,7 +117,7 @@
   var _removeFilterCheck = function (value) {
     var elementIndex = filter.features.indexOf(value);
 
-    if (elementIndex) {
+    if (elementIndex > -1) {
       filter.features.splice(elementIndex, 1);
     }
   };
@@ -107,7 +138,7 @@
         _removeFilterCheck(check.value);
       }
 
-      _updatePins();
+      window.debounce(_updatePins)();
     });
   });
 
