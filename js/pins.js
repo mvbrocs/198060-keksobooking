@@ -4,35 +4,49 @@
   var pinsContainer = document.querySelector('.map__pins');
   var pinTemplate = window.util.getTemplate('.map__pin');
 
-  var Pin = {
-    WIDTH: 50,
-    HEIGHT: 70
+  var Pin = function (body, data) {
+    this.body = body;
+    this.data = data;
+    this.setImage();
+    this.setPosition();
+    this.onClick();
+
+    return this.body;
   };
 
-  var _createPin = function (advertData) {
-    var pin = pinTemplate.cloneNode(true);
+  Pin.prototype.WIDTH = 50;
+  Pin.prototype.HEIGHT = 70;
 
-    pin.style.left = (advertData.location.x - Pin.WIDTH / 2) + 'px';
-    pin.style.top = (advertData.location.y - Pin.HEIGHT) + 'px';
+  Pin.prototype.setImage = function () {
+    this.body.querySelector('img').src = this.data.author.avatar;
+  };
 
-    pin.querySelector('img').src = advertData['author']['avatar'];
+  Pin.prototype.setPosition = function () {
+    this.body.style.left = (this.data.location.x - this.WIDTH / 2) + 'px';
+    this.body.style.top = (this.data.location.y - this.HEIGHT) + 'px';
+  };
 
-    return pin;
+  Pin.prototype.onClick = function () {
+    var pinBody = this.body;
+    var pinData = this.data;
+
+    pinBody.addEventListener('click', function () {
+      pinBody.classList.add('map__pin--active');
+      window.popup.open(pinData);
+    });
   };
 
   window.pins = {
     render: function (data) {
+      var pinsFragment = document.createDocumentFragment();
 
       data.forEach(function (advertData) {
-        var pin = _createPin(advertData);
+        var myPin = new Pin(pinTemplate.cloneNode(true), advertData);
 
-        pin.addEventListener('click', function () {
-          pin.classList.add('map__pin--active');
-          window.popup.open(advertData);
-        });
-
-        pinsContainer.appendChild(pin);
+        pinsFragment.appendChild(myPin);
       });
+
+      pinsContainer.appendChild(pinsFragment);
     },
     deactivate: function () {
 
